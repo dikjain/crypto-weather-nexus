@@ -17,6 +17,7 @@ const loadFavorites = () => {
 };
 
 export const useStore = create((set, get) => ({
+
   /** ==========================
    * WEATHER STATE
    ===========================*/
@@ -93,7 +94,7 @@ export const useStore = create((set, get) => ({
   fetchCrypto: async () => {
     try {
       const res = await axios.get(`https://api.coingecko.com/api/v3/coins/markets`, {
-        params: { vs_currency: 'usd', ids: 'bitcoin,ethereum,cardano,dogecoin,solana' }
+        params: { vs_currency: 'usd', ids: 'bitcoin,ethereum,cardano,dogecoin' }
       });
       const cryptoMap = res.data.reduce((acc, coin) => {
         acc[coin.id] = coin;

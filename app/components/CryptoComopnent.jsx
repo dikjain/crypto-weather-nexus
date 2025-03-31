@@ -94,7 +94,7 @@ const CryptoComponent = () => {
   return (
     <section className="bg-white rounded-lg shadow p-6">
       <h2 className="text-2xl font-semibold mb-4">Crypto Dashboard</h2>
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         {Object.entries(cryptoData).map(([id, data]) => {
           try {
             // Safely access nested data with optional chaining
