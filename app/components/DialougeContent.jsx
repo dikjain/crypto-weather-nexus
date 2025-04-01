@@ -17,7 +17,7 @@ export function DialogDemo() {
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors" asChild>
+      <DialogTrigger className="bg-blue-500 cursor-pointer hover:text-white text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors" asChild>
         <Button variant="outline">View Favorites</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

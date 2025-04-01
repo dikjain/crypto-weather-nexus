@@ -5,16 +5,31 @@ import NewsComponent from './components/NewsComponents';
 import CryptoComponent from './components/CryptoComopnent';
 import WeatherComponent from './components/WeatherComponent';
 import { DialogDemo } from './components/DialougeContent';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
+
+const STAGGER_DELAY = 0.1;
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+};
 
 export default function Home() {
   const { 
     fetchWeather,
-    fetchCrypto,
+    fetchCrypto, 
     fetchNews,
-    startCryptoWebSocket, 
+    startCryptoWebSocket,
     closeCryptoWebSocket
   } = useStore();
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     const cities = ['New York', 'London', 'Tokyo'];
@@ -24,11 +39,9 @@ export default function Home() {
       fetchNews();
     };
 
-    // Initial data fetch
     fetchAllData();
     startCryptoWebSocket();
 
-    // Periodic refresh
     const interval = setInterval(fetchAllData, 60000);
 
     return () => {
@@ -37,81 +50,90 @@ export default function Home() {
     };
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100
-      }
-    }
-  };
-
-  const headerVariants = {
-    hidden: { x: -100, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    }
-  };
-
   return (
-    <motion.main
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="min-h-screen p-4 md:p-8 bg-gray-50"
+    <motion.div
+      initial="initial"
+      animate="animate"
+      className="min-h-screen relative z-40 bg-background"
     >
       <motion.div 
-        variants={headerVariants}
-        className="flex justify-between items-center mb-8"
-      >
-        <motion.h1 
-          className="text-4xl font-bold text-gray-900"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300 }}
+        className="fixed top-0 left-0 right-0 h-1 z-50 origin-left bg-primary"
+        style={{ scaleX }}
+      />
+
+      <main className="container mx-auto p-4 md:p-8">
+        <motion.section
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="py-8"
         >
-          CryptoWeather Nexus
-        </motion.h1>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          <div className="flex justify-between items-center mb-8">
+            <motion.h1
+              className="text-4xl font-bold"
+              whileHover={{ scale: 1.02 }}
+              style={{ fontFamily: "var(--font-orbitron)" }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              CryptoWeather Nexus
+            </motion.h1>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
+              <DialogDemo />
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <WeatherComponent />
+            </motion.div>
+
+            <motion.div
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <CryptoComponent />
+            </motion.div>
+
+            <motion.div
+              variants={fadeInUp} 
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <NewsComponent />
+            </motion.div>
+          </div>
+        </motion.section>
+      </main>
+
+      <div className="fixed bottom-4 right-4 text-sm text-gray-500">
+        <a 
+          href="https://portfolio-web-seven-beta.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-gray-700 transition-colors"
         >
-          <DialogDemo />
-        </motion.div>
-      </motion.div>
-      
-      <motion.div 
-        variants={containerVariants}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
-        <motion.div variants={itemVariants}>
-          <WeatherComponent />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <CryptoComponent />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <NewsComponent />
-        </motion.div>
-      </motion.div>
-    </motion.main>
+          Submitted by Dikshit Mahanot
+        </a>
+      </div>
+    </motion.div>
   );
 }

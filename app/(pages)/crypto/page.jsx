@@ -3,6 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../../store/store';
 import { useSearchParams } from 'next/navigation';
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+};
 
 const CryptoDetails = () => {
   const { cryptoData, livePrices, fetchCrypto } = useStore();
@@ -30,9 +37,14 @@ const CryptoDetails = () => {
 
   if (!coinId || !cryptoData[coinId]) {
     return (
-      <div className="p-8">
+      <motion.div 
+        className="p-8"
+        initial="initial"
+        animate="animate"
+        variants={fadeInUp}
+      >
         <h1 className="text-2xl font-bold text-red-500">Invalid cryptocurrency selected</h1>
-      </div>
+      </motion.div>
     );
   }
 
@@ -40,40 +52,69 @@ const CryptoDetails = () => {
   const currentPrice = livePrices[coinId] || coin.current_price;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto h-screen flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-lg p-8">
+    <motion.div 
+      className="p-8 max-w-7xl mx-auto min-h-screen flex items-center justify-center"
+      initial="initial"
+      animate="animate"
+      variants={fadeInUp}
+    >
+      <motion.div 
+        className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300"
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
         {/* Header */}
-        <div className="flex items-center gap-6 mb-10 border-b pb-6">
-          <img 
+        <motion.div 
+          className="flex items-center gap-6 mb-10 border-b pb-6"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.img 
             src={coin.image} 
             alt={coin.name} 
             className="w-20 h-20"
+            whileHover={{ scale: 1.1 }}
             onError={() => toast.error(`Failed to load ${coin.name} image`)}
           />
           <div>
             <h1 className="text-4xl font-bold">{coin.name}</h1>
             <p className="text-xl text-gray-500 uppercase">{coin.symbol}</p>
           </div>
-          <div className={`ml-auto text-right transition-colors duration-500 ${
-            priceFlash === 'green' ? 'text-green-600' : 
-            priceFlash === 'red' ? 'text-red-600' : ''
-          }`}>
+          <motion.div 
+            className={`ml-auto text-right transition-colors duration-500 ${
+              priceFlash === 'green' ? 'text-green-600' : 
+              priceFlash === 'red' ? 'text-red-600' : ''
+            }`}
+            animate={priceFlash ? { scale: [1, 1.1, 1] } : {}}
+            transition={{ duration: 0.3 }}
+          >
             <p className="text-5xl font-bold">
               ${Number(currentPrice).toLocaleString()}
             </p>
             <div className="flex items-center gap-2 justify-end mt-2">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium
-                ${coin.price_change_percentage_24h >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <motion.span 
+                className={`px-3 py-1 rounded-full text-sm font-medium
+                  ${coin.price_change_percentage_24h >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                whileHover={{ scale: 1.05 }}
+              >
                 {coin.price_change_percentage_24h >= 0 ? '↑' : '↓'}
                 {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
-              </span>
+              </motion.span>
               <span className="text-gray-500">24h</span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
+        {/* Rest of the component remains the same but wrapped in motion.div with subtle animations */}
         {/* Market Stats Table */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {/* Existing table content */}
           <div className="overflow-hidden rounded-lg border border-gray-200">
             <table className="w-full">
               <thead className="bg-gray-50">
@@ -137,10 +178,15 @@ const CryptoDetails = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
 
         {/* All Time Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <div className="overflow-hidden rounded-lg border border-gray-200">
             <table className="w-full">
               <thead className="bg-gray-50">
@@ -188,9 +234,9 @@ const CryptoDetails = () => {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 
