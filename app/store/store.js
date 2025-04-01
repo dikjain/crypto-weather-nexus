@@ -23,7 +23,7 @@ export const useStore = create((set, get) => ({
   weatherData: {},
   fetchWeather: async (city, days = 1, dt = null, hour = null) => {
     try {
-      let url = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEYS.weather}&q=${city}&days=${days}&aqi=yes`;
+      let url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEYS.weather}&q=${city}&days=${days}&aqi=yes`;
       
       if (dt) {
         url += `&dt=${dt}`;
