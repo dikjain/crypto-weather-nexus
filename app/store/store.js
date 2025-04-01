@@ -2,9 +2,8 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 const API_KEYS = {
-  weather: process.env.NEXT_PUBLIC_WEATHER_API_KEY || '5ff1aac7092f4205943185019253103',
-  crypto: process.env.NEXT_PUBLIC_CRYPTO_API_KEY,
-  news: process.env.NEXT_PUBLIC_NEWS_API_KEY || 'pub_773184d5951d4b024306f84bf59ede50a2fb8'
+  weather: process.env.NEXT_PUBLIC_WEATHER_API_KEY || '',
+  news: process.env.NEXT_PUBLIC_NEWS_API_KEY || ''
 };
 
 // Load initial favorites from localStorage
