@@ -4,7 +4,7 @@ A modern, multi-page dashboard combining real-time weather data, cryptocurrency 
 
 ## 🌟 Live Demo
 
-Visit the live application: [https://portfolio-web-seven-beta.vercel.app/](https://portfolio-web-seven-beta.vercel.app/)
+Visit the live application: [https://nextjs-assignmnet-mu.vercel.app/](https://nextjs-assignmnet-mu.vercel.app/)
 
 ## 🚀 Features
 
@@ -44,12 +44,12 @@ Visit the live application: [https://portfolio-web-seven-beta.vercel.app/](https
 ## 🛠 Technical Implementation
 
 ### Core Technologies
-- **Frontend Framework**: Next.js 13+ (App Router)
+- **Frontend Framework**: Next.js 15 (App Router)
 - **State Management**: Zustand
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
 - **Real-time Data**: WebSocket (CoinCap API)
-- **Notifications**: Sonner Toast
+- **Notifications**: Sonner Toast (Shadcn UI)
 
 ### API Integrations
 - **Weather**: WeatherAPI.com
@@ -60,7 +60,7 @@ Visit the live application: [https://portfolio-web-seven-beta.vercel.app/](https
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/crypto-weather-nexus.git
+git clone https://github.com/dikjain/crypto-weather-nexus.git
 cd crypto-weather-nexus
 ```
 
@@ -69,7 +69,7 @@ cd crypto-weather-nexus
 npm install
 ```
 
-3. Create a `.env.local` file with your API keys:
+3. Create a `.env` file with your API keys:
 ```env
 NEXT_PUBLIC_WEATHER_API_KEY=your_weather_api_key
 NEXT_PUBLIC_NEWS_API_KEY=your_news_api_key
@@ -133,7 +133,6 @@ The application is fully responsive across all device sizes:
 
 - API keys stored in environment variables
 - Input sanitization for user-provided data
-- CORS headers for API requests
 - Security headers configured in Next.js
 
 ## 🧪 Testing
