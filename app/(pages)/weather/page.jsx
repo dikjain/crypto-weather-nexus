@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useStore } from '../../store/store';
 import { useSearchParams } from 'next/navigation';
 import { toast } from "sonner";
@@ -23,7 +23,7 @@ const fadeInUp = {
   transition: { duration: 0.5 }
 };
 
-const WeatherDetails = () => {
+const WeatherContent = () => {
   const { weatherData, fetchWeather } = useStore();
   const searchParams = useSearchParams();
   const city = searchParams.get('city');
@@ -212,6 +212,14 @@ const WeatherDetails = () => {
         </motion.div>
       </motion.div>
     </motion.div>
+  );
+};
+
+const WeatherDetails = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WeatherContent />
+    </Suspense>
   );
 };
 

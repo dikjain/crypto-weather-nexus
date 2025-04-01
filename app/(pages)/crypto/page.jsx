@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useStore } from '../../store/store';
 import { useSearchParams } from 'next/navigation';
 import { toast } from "sonner";
@@ -11,7 +11,7 @@ const fadeInUp = {
   transition: { duration: 0.5 }
 };
 
-const CryptoDetails = () => {
+const CryptoDetailsContent = () => {
   const { cryptoData, livePrices, fetchCrypto } = useStore();
   const searchParams = useSearchParams();
   const coinId = searchParams.get('coin');
@@ -237,6 +237,14 @@ const CryptoDetails = () => {
         </motion.div>
       </motion.div>
     </motion.div>
+  );
+};
+
+const CryptoDetails = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CryptoDetailsContent />
+    </Suspense>
   );
 };
 
