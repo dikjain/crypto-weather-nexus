@@ -6,6 +6,8 @@ const API_KEYS = {
   news: process.env.NEXT_PUBLIC_NEWS_API_KEY || ''
 };
 
+console.log(API_KEYS);
+
 // Load initial favorites from localStorage
 const loadFavorites = () => {
   if (typeof window !== 'undefined') {
