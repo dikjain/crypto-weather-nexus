@@ -6,8 +6,6 @@ const API_KEYS = {
   news: process.env.NEXT_PUBLIC_NEWS_API_KEY || ''
 };
 
-console.log(API_KEYS);
-
 // Load initial favorites from localStorage
 const loadFavorites = () => {
   if (typeof window !== 'undefined') {
@@ -25,7 +23,7 @@ export const useStore = create((set, get) => ({
   weatherData: {},
   fetchWeather: async (city, days = 1, dt = null, hour = null) => {
     try {
-      let url = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEYS.weather}&q=${city}&days=${days}&aqi=yes`;
+      let url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEYS.weather}&q=${city}&days=${days}&aqi=yes`;
       
       if (dt) {
         url += `&dt=${dt}`;
