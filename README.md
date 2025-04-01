@@ -5,6 +5,7 @@ A modern, multi-page dashboard combining real-time weather data, cryptocurrency 
 ## 🌟 Live Demo
 
 Visit the live application: [https://nextjs-assignmnet-mu.vercel.app/](https://nextjs-assignmnet-mu.vercel.app/)
+
 Watch Demo : [https://drive.google.com/file/d/1syZ_E-lRohgUcmGHae3_imG79T7a0h0c/view?usp=drive_link](https://drive.google.com/file/d/1syZ_E-lRohgUcmGHae3_imG79T7a0h0c/view?usp=drive_link)
 
 ## 🚀 Features
